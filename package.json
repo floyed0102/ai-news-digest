@@ -8,6 +8,7 @@
     "send": "tsx feishu-send.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
