@@ -2,34 +2,27 @@ name: AI 新闻日报
 
 on:
   schedule:
-    # 北京时间每周一至周五 9:00（UTC 1:00）
     - cron: "0 1 * * 1-5"
   workflow_dispatch:
 
 jobs:
   digest:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run aggregator
+          node-version: "22"
+      - run: npm install
+      - name: Aggregate
         env:
           ANTHROPIC_AUTH_TOKEN: ${{ secrets.ANTHROPIC_AUTH_TOKEN }}
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
           ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
-        run: node ./node_modules/tsx/dist/cli.mjs ai-news.ts
-
-      - name: Send to Feishu
+        run: npx tsx ai-news.ts
+      - name: Send
         env:
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
-        run: node ./node_modules/tsx/dist/cli.mjs feishu-send.ts
+        run: npx tsx feishu-send.ts
