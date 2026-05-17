@@ -4,7 +4,8 @@
   "description": "AI News Daily Digest CLI — aggregates AI-related articles from TechCrunch, The Verge, and Hacker News",
   "type": "module",
   "scripts": {
-    "start": "tsx ai-news.ts"
+    "aggregate": "tsx ai-news.ts",
+    "send": "tsx feishu-send.ts"
   },
   "dependencies": {
     "rss-parser": "^3.13.0"
